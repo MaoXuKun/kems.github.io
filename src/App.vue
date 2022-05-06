@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
 import { Calendar } from "vant";
 import dayjs from "dayjs";
 import type { CalendarDayItem } from "vant";
@@ -8,6 +9,19 @@ const minDate = today.subtract(1, "month").toDate();
 const maxDate = today.add(1, "year").toDate();
 const dayTimestamp = dayjs("2022-5-4").valueOf();
 const nightTimestamp = dayjs("2022-5-5").valueOf();
+
+const reload = () => {
+  window.location.reload();
+};
+
+onMounted(() => {
+  const todayStr = today.format("YYYY-MM-DD");
+  setInterval(() => {
+    if (todayStr !== dayjs().format("YYYY-MM-DD")) {
+      reload;
+    }
+  }, 1000);
+});
 
 const formatter = (day: CalendarDayItem) => {
   if (day.date) {
@@ -32,7 +46,7 @@ const formatter = (day: CalendarDayItem) => {
   <Calendar
     title="排班"
     :poppable="false"
-    :show-confirm="false"
+    confirm-text="刷新"
     :style="{ height: '100vh' }"
     :min-date="minDate"
     :max-date="maxDate"
@@ -40,6 +54,7 @@ const formatter = (day: CalendarDayItem) => {
     :formatter="formatter"
     color="#ef4444"
     :first-day-of-week="1"
+    @confirm="reload"
   />
 </template>
 
