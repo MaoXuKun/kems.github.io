@@ -65,4 +65,7 @@ const formatter = (day: CalendarDayItem) => {
 .night {
   color: #8b5cf6;
 }
+.van-calendar__confirm {
+  margin-bottom: 20px;
+}
 </style>
