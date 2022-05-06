@@ -1,125 +1,53 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import HelloWorld from "@/components/HelloWorld.vue";
+import { Calendar } from "vant";
+import dayjs from "dayjs";
+import type { CalendarDayItem } from "vant";
+
+const today = dayjs();
+const minDate = today.subtract(1, "month").toDate();
+const maxDate = today.add(1, "year").toDate();
+const dayTimestamp = dayjs("2022-5-4").valueOf();
+const nightTimestamp = dayjs("2022-5-5").valueOf();
+
+const formatter = (day: CalendarDayItem) => {
+  if (day.date) {
+    const timestamp = day.date.valueOf();
+    if (((timestamp - dayTimestamp) / 1000 / 24 / 60 / 60) % 4 === 0) {
+      day.bottomInfo = "白";
+      day.className = "day";
+    }
+    if (((timestamp - nightTimestamp) / 1000 / 24 / 60 / 60) % 4 === 0) {
+      day.bottomInfo = "夜";
+      day.className = "night";
+    }
+    if (timestamp === dayjs(today.format("YYYY-MM-DD")).valueOf()) {
+      day.bottomInfo = "今天";
+    }
+  }
+  return day;
+};
 </script>
 
 <template>
-  <header>
-    <img
-      alt="Vue logo"
-      class="logo"
-      src="@/assets/logo.svg"
-      width="125"
-      height="125"
-    />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+  <Calendar
+    title="排班"
+    :poppable="false"
+    :show-confirm="false"
+    :style="{ height: '100vh' }"
+    :min-date="minDate"
+    :max-date="maxDate"
+    readonly
+    :formatter="formatter"
+    color="#ef4444"
+    :first-day-of-week="1"
+  />
 </template>
 
 <style>
-@import "@/assets/base.css";
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
+.day {
+  color: #10b981;
 }
-
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
-
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
-  }
-
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.night {
+  color: #8b5cf6;
 }
 </style>
