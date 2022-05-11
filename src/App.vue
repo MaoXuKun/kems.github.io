@@ -5,12 +5,12 @@ import dayjs from "dayjs";
 import type { CalendarDayItem } from "vant";
 
 const today = dayjs();
-const minDate = today.subtract(1, "month").toDate();
-const maxDate = today.add(1, "year").toDate();
-const dayTimestamp = dayjs("2022-5-4").valueOf();
-const nightTimestamp = dayjs("2022-5-5").valueOf();
+const minDate: Date = today.subtract(1, "month").toDate();
+const maxDate: Date = today.add(1, "year").toDate();
+const dayTimestamp: number = dayjs("2022-5-4").valueOf();
+const nightTimestamp: number = dayjs("2022-5-5").valueOf();
 
-const reload = () => {
+const reload: () => void = () => {
   window.location.reload();
 };
 
@@ -25,7 +25,7 @@ onMounted(() => {
 
 const formatter = (day: CalendarDayItem) => {
   if (day.date) {
-    const timestamp = day.date.valueOf();
+    const timestamp: number = day.date.valueOf();
     if (((timestamp - dayTimestamp) / 1000 / 24 / 60 / 60) % 4 === 0) {
       day.bottomInfo = "白";
       day.className = "day";
