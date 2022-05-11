@@ -35,7 +35,7 @@ const formatter = (day: CalendarDayItem) => {
       day.className = "night";
     }
     if (timestamp === dayjs(today.format("YYYY-MM-DD")).valueOf()) {
-      day.bottomInfo = "今天";
+      day.topInfo = "今天";
     }
   }
   return day;
@@ -54,6 +54,7 @@ const formatter = (day: CalendarDayItem) => {
     :formatter="formatter"
     color="#ef4444"
     :first-day-of-week="1"
+    :lazy-render="false"
     @confirm="reload"
   />
 </template>
