@@ -7,8 +7,8 @@ import type { CalendarDayItem } from "vant";
 const today = dayjs();
 const minDate: Date = today.subtract(1, "month").toDate();
 const maxDate: Date = today.add(1, "year").toDate();
-const dayTimestamp: number = dayjs("2022-5-4").valueOf();
-const nightTimestamp: number = dayjs("2022-5-5").valueOf();
+const dayTimestamp: number = dayjs("2023-1-12").valueOf();
+const nightTimestamp: number = dayjs("2023-1-13").valueOf();
 
 const reload: () => void = () => {
   window.location.reload();
@@ -31,7 +31,7 @@ const formatter = (day: CalendarDayItem) => {
       day.className = "day";
     }
     if (((timestamp - nightTimestamp) / 1000 / 24 / 60 / 60) % 4 === 0) {
-      day.bottomInfo = "夜";
+      day.bottomInfo = "白";
       day.className = "night";
     }
     if (timestamp === dayjs(today.format("YYYY-MM-DD")).valueOf()) {
