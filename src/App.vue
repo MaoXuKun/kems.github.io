@@ -31,7 +31,7 @@ const formatter = (day: CalendarDayItem) => {
       day.className = "day";
     }
     if (((timestamp - nightTimestamp) / 1000 / 24 / 60 / 60) % 4 === 0) {
-      day.bottomInfo = "白";
+      day.bottomInfo = "夜";
       day.className = "night";
     }
     if (timestamp === dayjs(today.format("YYYY-MM-DD")).valueOf()) {
